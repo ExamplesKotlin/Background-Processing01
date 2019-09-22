@@ -33,6 +33,7 @@ package com.raywenderlich.android.rwdc2018.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.os.AsyncTask
 import com.raywenderlich.android.rwdc2018.app.PhotosUtils
 
 
@@ -50,19 +51,6 @@ class PhotosRepository : Repository {
     return bannerLiveData
   }
 
-  private fun fetchPhoto() {
-
-    val runnable = Runnable {
-      val photosString = PhotosUtils.photoJsonString()
-      val photos = PhotosUtils.photoUrlsFromJsonString(photosString ?: "")
-
-      if (photos != null) {
-        photosLiveData.postValue(photos)
-      }
-    }
-    val thread = Thread(runnable)
-    thread.start()
-  }
 
   private fun fetchBanner() {
 
@@ -76,6 +64,21 @@ class PhotosRepository : Repository {
     }
     val thread = Thread(runnable)
     thread.start()
+  }
+
+
+  private class FetchPhotosAsyncTask(val callback: (List<String>) -> Unit) : AsyncTask<Void, Void, List<String>>() {
+
+    override fun doInBackground(vararg params: Void?): ArrayList<String>? {
+      val photosString = PhotosUtils.photoJsonString()
+      return PhotosUtils.photoUrlsFromJsonString(photosString ?: "")
+    }
+
+    override fun onPostExecute(result: List<String>?) {
+      if (result != null) {
+        callback(result)
+      }
+    }
   }
 
 }

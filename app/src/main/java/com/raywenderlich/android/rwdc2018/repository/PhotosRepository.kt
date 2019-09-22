@@ -50,6 +50,10 @@ class PhotosRepository : Repository {
     return photosLiveData
   }
 
+  override fun getBanner(): LiveData<String> {
+    fetchBanner()
+    return bannerLiveData
+  }
 
   private fun fetchJsonData() {
 
@@ -79,7 +83,4 @@ class PhotosRepository : Repository {
     thread.start()
   }
 
-  override fun getBanner(): LiveData<String> {
-    return bannerLiveData
-  }
 }

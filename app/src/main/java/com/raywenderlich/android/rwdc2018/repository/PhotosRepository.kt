@@ -53,7 +53,11 @@ class PhotosRepository : Repository {
   private fun fetchJsonData() {
 
     val handler = object : Handler(Looper.getMainLooper()) {
-
+      override fun handleMessage(msg: Message?) {
+        val bundle = msg?.data
+        val photos = bundle?.getStringArrayList("PHOTOS_KEY")
+        photosLiveData.value = photos
+      }
     }
 
     val runnable = Runnable {

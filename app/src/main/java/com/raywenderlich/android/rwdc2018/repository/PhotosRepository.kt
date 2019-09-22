@@ -52,24 +52,12 @@ class PhotosRepository : Repository {
 
   private fun fetchJsonData() {
 
-    val handler = object : Handler(Looper.getMainLooper()) {
-      override fun handleMessage(msg: Message?) {
-        val bundle = msg?.data
-        val photos = bundle?.getStringArrayList("PHOTOS_KEY")
-        photosLiveData.value = photos
-      }
-    }
-
     val runnable = Runnable {
       val photosString = PhotosUtils.photoJsonString()
       val photos = PhotosUtils.photoUrlsFromJsonString(photosString ?: "")
 
       if (photos != null) {
-        val message = Message()
-        val bundle = Bundle()
-        bundle.putStringArrayList("PHOTOS_KEY", photos)
-        message.data = bundle
-        handler.sendMessage(message)
+        photosLiveData.postValue(photos)
       }
     }
     val thread = Thread(runnable)

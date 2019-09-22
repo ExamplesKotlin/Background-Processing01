@@ -50,6 +50,7 @@ class PhotosRepository : Repository {
     return photosLiveData
   }
 
+
   private fun fetchJsonData() {
 
     val runnable = Runnable {
@@ -58,6 +59,20 @@ class PhotosRepository : Repository {
 
       if (photos != null) {
         photosLiveData.postValue(photos)
+      }
+    }
+    val thread = Thread(runnable)
+    thread.start()
+  }
+
+  private fun fetchBanner() {
+
+    val runnable = Runnable {
+      val photosString = PhotosUtils.photoJsonString()
+      val banner = PhotosUtils.bannerFromJsonString(photosString ?: "")
+
+      if (banner != null) {
+        bannerLiveData.postValue(banner)
       }
     }
     val thread = Thread(runnable)

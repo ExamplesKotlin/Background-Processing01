@@ -49,7 +49,11 @@ class PhotosRepository : Repository {
   private fun fetchJsonData() {
     val runnable = Runnable {
       val photosString = PhotosUtils.photoJsonString()
-      Log.i("PhotosRepository", photosString)
+      val photos = PhotosUtils.photoUrlsFromJsonString(photosString ?: "")
+
+      if (photos != null) {
+        photosLiveData.value = photos
+      }
     }
     val thread = Thread(runnable)
     thread.start()

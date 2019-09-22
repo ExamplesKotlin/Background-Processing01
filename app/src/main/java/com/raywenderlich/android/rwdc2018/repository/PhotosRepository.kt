@@ -42,7 +42,9 @@ class PhotosRepository : Repository {
   private val bannerLiveData = MutableLiveData<String>()
 
   override fun getPhotos(): LiveData<List<String>> {
-    fetchPhoto()
+    FetchPhotosAsyncTask({ photos ->
+      photosLiveData.value = photos
+    }).execute()
     return photosLiveData
   }
 
@@ -63,7 +65,7 @@ class PhotosRepository : Repository {
       }
     }
     val thread = Thread(runnable)
-    thread.start()
+//    thread.start()
   }
 
 

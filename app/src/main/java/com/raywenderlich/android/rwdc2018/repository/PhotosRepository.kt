@@ -49,7 +49,9 @@ class PhotosRepository : Repository {
   }
 
   override fun getBanner(): LiveData<String> {
-    fetchBanner()
+    FetchBannerAsyncTask({ banner ->
+      bannerLiveData.value = banner
+    }).execute()
     return bannerLiveData
   }
 

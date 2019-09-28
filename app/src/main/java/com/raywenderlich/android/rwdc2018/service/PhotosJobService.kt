@@ -7,5 +7,7 @@ import android.os.IBinder
 
 class PhotosJobService : JobService() {
 
-
+  companion object {
+    private const val TAG = "PhotosJobService"
+  }
 }

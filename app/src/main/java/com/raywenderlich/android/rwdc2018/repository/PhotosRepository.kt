@@ -47,6 +47,10 @@ class PhotosRepository : Repository {
   private val photosLiveData = MutableLiveData<List<String>>()
   private val bannerLiveData = MutableLiveData<String>()
 
+  init {
+    scheduleFetchJob()
+  }
+
   override fun getPhotos(): LiveData<List<String>> {
     FetchPhotosAsyncTask({ photos ->
       photosLiveData.value = photos

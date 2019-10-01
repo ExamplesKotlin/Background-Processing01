@@ -31,10 +31,16 @@
 
 package com.raywenderlich.android.rwdc2018.repository
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.ComponentName
+import android.content.Context
 import android.os.AsyncTask
 import com.raywenderlich.android.rwdc2018.app.PhotosUtils
+import com.raywenderlich.android.rwdc2018.app.RWDC2018Application
+import com.raywenderlich.android.rwdc2018.service.PhotosJobService
 
 
 class PhotosRepository : Repository {
@@ -55,6 +61,16 @@ class PhotosRepository : Repository {
     return bannerLiveData
   }
 
+  private fun scheduleFetchJob() {
+    val jobScheduler =  RWDC2018Application.getAppContext()
+      .getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+    val jobInfo = JobInfo.Builder(1000,
+      ComponentName(RWDC2018Application.getAppContext(), PhotosJobService::class.java))
+      .setPeriodic(900000)
+      .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+      .build()
+    jobScheduler.schedule(jobInfo)
+  }
 
   private class FetchPhotosAsyncTask(val callback: (List<String>) -> Unit) : AsyncTask<Void, Void, List<String>>() {
 

@@ -50,6 +50,7 @@ class PhotosRepository : Repository {
 
   init {
     scheduleFetchJob()
+    scheduleLogJob()
   }
 
   override fun getPhotos(): LiveData<List<String>> {

@@ -10,7 +10,7 @@ class DownloadWorker : Worker() {
     private const val TAG = "DownloadWorker"
   }
 
-  override fun doWork(): Result {
+  override fun doWork(): WorkerResult {
     val needsRetry = try {
       val jsonString = PhotosUtils.fetchJsonString()
       (jsonString == null)
@@ -21,11 +21,13 @@ class DownloadWorker : Worker() {
 
     if (needsRetry) {
       Log.i(TAG, "WorkerResult.RETRY")
-      return Result.retry()
+//      return WorkerResult.retry()
+      return WorkerResult.RETRY
     }
 
     Log.i(TAG, "WorkerResult.SUCCESS")
-    return Result.success()
+//    return WorkerResult.success()
+    return return WorkerResult.SUCCESS
   }
 
 }

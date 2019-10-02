@@ -31,19 +31,12 @@
 
 package com.raywenderlich.android.rwdc2018.repository
 
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.content.ComponentName
-import android.content.Context
 import android.os.AsyncTask
 import androidx.work.*
 import com.raywenderlich.android.rwdc2018.app.PhotosUtils
-import com.raywenderlich.android.rwdc2018.app.RWDC2018Application
 import com.raywenderlich.android.rwdc2018.service.DownloadWorker
-import com.raywenderlich.android.rwdc2018.service.LogJobService
-import com.raywenderlich.android.rwdc2018.service.PhotosJobService
 import java.util.concurrent.TimeUnit
 
 
@@ -73,23 +66,23 @@ class PhotosRepository : Repository {
     return bannerLiveData
   }
 
-private fun schedulePeriodicWorkRequest() {
-  val constraints = Constraints.Builder()
-    .setRequiredNetworkType(NetworkType.CONNECTED)
-    .setRequiresStorageNotLow(true)
-    .build()
+  private fun schedulePeriodicWorkRequest() {
+    val constraints = Constraints.Builder()
+      .setRequiredNetworkType(NetworkType.CONNECTED)
+      .setRequiresStorageNotLow(true)
+      .build()
 
-  val workManager = WorkManager.getInstance()
+    val workManager = WorkManager.getInstance()
 
-  val request: WorkRequest = PeriodicWorkRequestBuilder<DownloadWorker>(15,
-    TimeUnit.MINUTES)
-    .setConstraints(constraints)
-    .addTag(DOWNLOAD_WORK_TAG)
-    .build()
+    val request: WorkRequest = PeriodicWorkRequestBuilder<DownloadWorker>(5,
+      TimeUnit.MINUTES)
+      .setConstraints(constraints)
+      .addTag(DOWNLOAD_WORK_TAG)
+      .build()
 
-  workManager.cancelAllWorkByTag(DOWNLOAD_WORK_TAG)
-  workManager.enqueue(request)
-}
+    workManager.cancelAllWorkByTag(DOWNLOAD_WORK_TAG)
+    workManager.enqueue(request)
+  }
 
   private class FetchPhotosAsyncTask(val callback: (List<String>) -> Unit) : AsyncTask<Void, Void, List<String>>() {
 

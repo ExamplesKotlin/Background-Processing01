@@ -48,6 +48,10 @@ class PhotosRepository : Repository {
   private val photosLiveData = MutableLiveData<List<String>>()
   private val bannerLiveData = MutableLiveData<String>()
 
+  companion object {
+    const val DOWNLOAD_WORK_TAG = "DOWNLOAD_WORK_TAG"
+  }
+
   init {
     scheduleFetchJob()
     scheduleLogJob()

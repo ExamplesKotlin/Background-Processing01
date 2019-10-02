@@ -13,6 +13,16 @@ class LogJobService : JobService() {
     private const val TAG = "LogJobService"
   }
 
+  override fun onCreate() {
+    super.onCreate()
+    Log.i(TAG, "onCreate")
+  }
+
+  override fun onDestroy() {
+    Log.i(TAG, "onDestroy")
+    super.onDestroy()
+  }
+
   override fun onStartJob(params: JobParameters?): Boolean {
 
     val runnable = Runnable {

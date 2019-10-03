@@ -50,8 +50,11 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
     Log.i(TAG, "Starting download for $param")
     SongUtils.download(param)
     Log.i(TAG ,"Ending download for $param")
+
+    Log.i(TAG ,"Sending download for $param")
+    broadcastDownloadComplete(param)
   }
-  
+
   private fun broadcastDownloadComplete(param: String) {
     val intent = Intent(DOWNLOAD_COMPLETE)
     intent.putExtra(DOWNLOAD_COMPLETE_KEY, param)

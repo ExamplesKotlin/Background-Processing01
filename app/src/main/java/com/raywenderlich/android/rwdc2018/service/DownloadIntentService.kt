@@ -1,6 +1,7 @@
 package com.raywenderlich.android.rwdc2018.service
 
 import android.app.IntentService
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.raywenderlich.android.rwdc2018.app.SongUtils
@@ -12,6 +13,14 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
     private const val TAG = "DownloadIntentService"
     private const val ACTION_DOWNLOAD = "ACTION_DOWNLOAD"
     private const val EXTRA_URL = "EXTRA_URL"
+
+    fun startActionDownload(contex: Context, param: String) {
+      val intent = Intent(contex, DownloadIntentService::class.java).apply {
+        action = ACTION_DOWNLOAD
+        putExtra(EXTRA_URL, param)
+      }
+      contex.startService(intent)
+    }
   }
 
   override fun onCreate() {

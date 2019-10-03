@@ -33,10 +33,17 @@ package com.raywenderlich.android.rwdc2018.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.AsyncTask
+import android.support.v4.content.LocalBroadcastManager
 import androidx.work.*
 import com.raywenderlich.android.rwdc2018.app.PhotosUtils
+import com.raywenderlich.android.rwdc2018.app.RWDC2018Application
 import com.raywenderlich.android.rwdc2018.service.DownloadWorker
+import com.raywenderlich.android.rwdc2018.service.FetchIntentService
 import java.util.concurrent.TimeUnit
 
 
@@ -46,6 +53,22 @@ class PhotosRepository : Repository {
 
   companion object {
     const val DOWNLOAD_WORK_TAG = "DOWNLOAD_WORK_TAG"
+  }
+
+  private val receiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+
+    }
+  }
+
+  override fun register() {
+    LocalBroadcastManager.getInstance(RWDC2018Application.getAppContext())
+      .registerReceiver(receiver, IntentFilter(FetchIntentService.FETCH_COMPLETE))
+  }
+
+  override fun unregister() {
+    LocalBroadcastManager.getInstance(RWDC2018Application.getAppContext())
+      .unregisterReceiver(receiver)
   }
 
   init {

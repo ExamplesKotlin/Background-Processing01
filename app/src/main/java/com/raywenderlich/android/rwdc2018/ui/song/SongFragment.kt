@@ -31,8 +31,12 @@
 
 package com.raywenderlich.android.rwdc2018.ui.song
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +51,16 @@ class SongFragment : Fragment() {
   companion object {
     fun newInstance(): SongFragment {
       return SongFragment()
+    }
+  }
+
+  private val receiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      val param = intent?.getStringExtra(DownloadIntentService.DOWNLOAD_COMPLETE_KEY)
+      Log.i("SongFragment", "Received broadcast for $param")
+      if (SongUtils.songFile().exists()) {
+        playButton.isEnabled = true
+      }
     }
   }
 

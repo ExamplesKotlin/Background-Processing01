@@ -14,6 +14,10 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
     private const val ACTION_DOWNLOAD = "ACTION_DOWNLOAD"
     private const val EXTRA_URL = "EXTRA_URL"
 
+    const val DOWNLOAD_COMPLETE = "DOWNLOAD_COMPLETE"
+    const val DOWNLOAD_COMPLETE_KEY = "DOWNLOAD_COMPLETE_KEY"
+
+
     fun startActionDownload(contex: Context, param: String) {
       val intent = Intent(contex, DownloadIntentService::class.java).apply {
         action = ACTION_DOWNLOAD

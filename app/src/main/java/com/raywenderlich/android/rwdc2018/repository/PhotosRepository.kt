@@ -57,7 +57,12 @@ class PhotosRepository : Repository {
 
   private val receiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-
+      FetchBannerAsyncTask({ banner ->
+        bannerLiveData.value = banner
+      }).execute()
+      FetchPhotosAsyncTask({ photos ->
+        photosLiveData.value = photos
+      }).execute()
     }
   }
 

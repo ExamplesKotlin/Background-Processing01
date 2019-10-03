@@ -13,8 +13,11 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <service
-      android:name=".service.DownloadIntentService"
+      android:name=".service.FetchIntentService"
       android:exported="false"></service>
+    <service
+      android:name=".service.DownloadIntentService"
+      android:exported="false" />
     <service
       android:name=".service.LogJobService"
       android:enabled="true"

@@ -13,6 +13,9 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <service
+      android:name=".service.DownloadIntentService"
+      android:exported="false"></service>
+    <service
       android:name=".service.LogJobService"
       android:enabled="true"
       android:exported="false"

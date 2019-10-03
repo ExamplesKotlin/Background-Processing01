@@ -14,6 +14,16 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
     private const val EXTRA_URL = "EXTRA_URL"
   }
 
+  override fun onCreate() {
+    super.onCreate()
+    Log.i(TAG, "Creating service")
+  }
+
+  override fun onDestroy() {
+    Log.i(TAG, "Destroying service")
+    super.onDestroy()
+  }
+
   override fun onHandleIntent(intent: Intent?) {
     when (intent?.action) {
       ACTION_DOWNLOAD -> {

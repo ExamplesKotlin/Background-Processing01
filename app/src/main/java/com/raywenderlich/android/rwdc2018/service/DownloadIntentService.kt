@@ -17,7 +17,7 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
   override fun onHandleIntent(intent: Intent?) {
     when (intent?.action) {
       ACTION_DOWNLOAD -> {
-        // TODO
+        handleActionDownload(intent.getStringExtra(EXTRA_URL))
       }
     }
   }

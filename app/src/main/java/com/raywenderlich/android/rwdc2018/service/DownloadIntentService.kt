@@ -3,6 +3,7 @@ package com.raywenderlich.android.rwdc2018.service
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import com.raywenderlich.android.rwdc2018.app.SongUtils
 
@@ -49,6 +50,12 @@ class DownloadIntentService : IntentService("DownloadIntentService") {
     Log.i(TAG, "Starting download for $param")
     SongUtils.download(param)
     Log.i(TAG ,"Ending download for $param")
+  }
+  
+  private fun broadcastDownloadComplete(param: String) {
+    val intent = Intent(DOWNLOAD_COMPLETE)
+    intent.putExtra(DOWNLOAD_COMPLETE_KEY, param)
+    LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
   }
 
 }

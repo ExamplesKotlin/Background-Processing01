@@ -47,6 +47,7 @@ import com.raywenderlich.android.rwdc2018.app.Constants
 import com.raywenderlich.android.rwdc2018.app.RWDC2018Application
 import com.raywenderlich.android.rwdc2018.app.SongUtils
 import com.raywenderlich.android.rwdc2018.service.DownloadIntentService
+import com.raywenderlich.android.rwdc2018.service.SongService
 import kotlinx.android.synthetic.main.fragment_song.*
 
 class SongFragment : Fragment() {
@@ -100,4 +101,25 @@ class SongFragment : Fragment() {
       stopButton.isEnabled = false
     }
   }
+
+  private fun stopPlaying() {
+    activity?.stopService(Intent(context, SongService::class.java))
+    enablePlayButton()
+  }
+
+  private fun enablePlayButton() {
+    playButton.isEnabled = true
+    stopButton.isEnabled = false
+  }
+
+  private fun enableStopButton() {
+    playButton.isEnabled = false
+    stopButton.isEnabled = true
+  }
+
+  private fun disableMediaButtons() {
+    playButton.isEnabled = false
+    stopButton.isEnabled = false
+  }
+
 }

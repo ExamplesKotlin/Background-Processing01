@@ -76,9 +76,14 @@ class SongFragment : Fragment() {
   override fun onResume() {
     super.onResume()
 
+    if (RWDC2018Application.isPlayingSong) {
+      enableStopButton()
+    } else {
+      enablePlayButton()
+    }
+
     if (!SongUtils.songFile().exists()) {
-      playButton.isEnabled = false
-      stopButton.isEnabled = false
+      disableMediaButtons()
     }
   }
 

@@ -67,7 +67,7 @@ class SongService : Service() {
     val intent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
     return NotificationCompat.Builder(this, CHANNEL_ID)
-      .setColor(ContextCompat.getColor((this, android.R.color.background_dark))
+      .setColor(ContextCompat.getColor(this, android.R.color.background_dark))
       .setContentIntent(intent)
       .setSmallIcon(R.drawable.rwdevcon_logo_24px)
       .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

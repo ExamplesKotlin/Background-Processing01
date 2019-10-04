@@ -64,7 +64,7 @@ class SongFragment : Fragment() {
       val param = intent?.getStringExtra(DownloadIntentService.DOWNLOAD_COMPLETE_KEY)
       Log.i("SongFragment", "Received broadcast for $param")
       if (SongUtils.songFile().exists()) {
-        playButton.isEnabled = true
+        enablePlayButton()
       }
     }
   }

@@ -27,6 +27,12 @@ class SongService : Service() {
     return null // Prevents binding with Activity
   }
 
+  override fun onCreate() {
+    super.onCreate()
+
+    startForeground(1000, createNotification())
+  }
+
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     player = MediaPlayer.create(this, Uri.fromFile(SongUtils.songFile()))
     player.isLooping = true

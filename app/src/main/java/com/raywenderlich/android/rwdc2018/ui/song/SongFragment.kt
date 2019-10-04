@@ -37,6 +37,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -97,8 +98,20 @@ class SongFragment : Fragment() {
 
     downloadButton.setOnClickListener {
       DownloadIntentService.startActionDownload(view.context, Constants.SONG_URL)
-      playButton.isEnabled = false
-      stopButton.isEnabled = false
+      disableMediaButtons()
+      stopPlaying()
+    }
+
+    playButton.setOnClickListener {
+      val ctx = context
+      if (ctx != null) {
+        ContextCompat.startForegroundService(ctx, Intent(ctx, SongService::class.java))
+      }
+      enableStopButton()
+    }
+
+    stopButton.setOnClickListener {
+      stopPlaying()
     }
   }
 

@@ -42,6 +42,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.raywenderlich.android.rwdc2018.R
 import com.raywenderlich.android.rwdc2018.app.Injection
+import com.raywenderlich.android.rwdc2018.app.RWDC2018Application
+import com.raywenderlich.android.rwdc2018.service.FetchIntentService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_photos.*
 
@@ -53,6 +55,17 @@ class PhotosFragment : Fragment() {
     fun newInstance(): PhotosFragment {
       return PhotosFragment()
     }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    viewModel.onStart()
+    FetchIntentService.startActionFetch(RWDC2018Application.getAppContext())
+  }
+
+  override fun onStop() {
+    super.onStop()
+    viewModel.onStop()
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
